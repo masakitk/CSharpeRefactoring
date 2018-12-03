@@ -5,7 +5,7 @@ namespace CsRefactor
     public class Customer
     {
         private string _name;
-        private List<Rental> _rentals;
+        private List<Rental> _rentals = new List<Rental>();
 
         public Customer(string name)
         {
