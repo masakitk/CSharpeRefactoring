@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CsRefactor
 {
@@ -27,7 +28,7 @@ namespace CsRefactor
             double totalAmount = 0;
             int frequentRenterPoints = 0;
             IEnumerable<Rental> rentals = _rentals;
-            string result = "Rental Record for " + getName() + "\n";
+            string result = "Rental Record for " + getName() + Environment.NewLine;
             foreach (var rental in rentals)
             {
                 double thisAmount = 0;
@@ -59,12 +60,12 @@ namespace CsRefactor
                     frequentRenterPoints++;
                 //この貸出に関する数値の表示
                 result += "\t" + each.getMovie().getTitle() + "\t" +
-                          thisAmount + "\n";
+                          thisAmount + Environment.NewLine;
                 totalAmount += thisAmount;
             }
 
-            result += "Amount owed is " + totalAmount + "\n";
-            result += "You earned " + frequentRenterPoints + "frequent renter points";
+            result += "Amount owed is " + totalAmount + Environment.NewLine;
+            result += "You earned " + frequentRenterPoints + " frequent renter points";
             return result;
         }
     }
