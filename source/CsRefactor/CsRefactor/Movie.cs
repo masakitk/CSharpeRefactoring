@@ -6,28 +6,14 @@
         public const int REGULAR = 0;
         public const int NEW_RELEASE = 1;
 
-        private string _title;
-        private int _priceCode;
-
         public Movie(string title, int priceCode)
         {
-            _title = title;
-            _priceCode = priceCode;
+            Title = title;
+            PriceCode = priceCode;
         }
 
-        public string getTitle()
-        {
-            return _title; 
-        }
+        public string Title { get; }
 
-        public int getPriceCode()
-        {
-            return _priceCode;
-        }
-
-        public void setPriceCode(int value)
-        {
-            _priceCode = value;
-        }
+        public int PriceCode { get; }
     }
 }
