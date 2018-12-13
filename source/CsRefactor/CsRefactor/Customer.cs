@@ -22,26 +22,26 @@ namespace CsRefactor
         public string Statement()
         {
             double totalAmount = 0;
-            int frequentRenterPoints = 0;
+            var frequentRenterPoints = 0;
             IEnumerable<Rental> rentals = _rentals;
-            string result = "Rental Record for " + Name + Environment.NewLine;
+            var result = "Rental Record for " + Name + Environment.NewLine;
             foreach (var rental in rentals)
             {
                 double thisAmount = 0;
-                Rental each = rental;
+                var each = rental;
 
                 //一行ごとに金額を計算
                 switch (each.Movie.PriceCode)
                 {
-                    case Movie.REGULAR:
+                    case PriceCodes.Regular:
                         thisAmount += 2;
                         if (each.DaysRented> 2)
                             thisAmount += (each.DaysRented- 2) * 1.5;
                         break;
-                    case Movie.NEW_RELEASE:
+                    case PriceCodes.NewRelease:
                         thisAmount += each.DaysRented* 3;
                         break;
-                    case Movie.CHILDRENS:
+                    case PriceCodes.Childrens:
                         thisAmount += 1.5;
                         if (each.DaysRented> 3)
                             thisAmount += (each.DaysRented- 3) * 1.5;
@@ -51,7 +51,7 @@ namespace CsRefactor
                 //レンタルポイントを加算
                 frequentRenterPoints++;
                 //新作を2日以上借りた場合はボーナスポイント
-                if ((each.Movie.PriceCode == Movie.NEW_RELEASE) &&
+                if ((each.Movie.PriceCode == PriceCodes.NewRelease) &&
                     each.DaysRented> 1)
                     frequentRenterPoints++;
                 //この貸出に関する数値の表示

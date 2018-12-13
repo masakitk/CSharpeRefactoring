@@ -6,9 +6,9 @@ namespace CsRefactor
     {
         static void Main(string[] args)
         {
-            var もののけ姫 = new Movie("もののけ姫", Movie.REGULAR);
-            var アンパンマン = new Movie("アンパンマン", Movie.CHILDRENS);
-            var ボヘミアンラプソディ = new Movie("ボヘミアン・ラプソディ", Movie.NEW_RELEASE);
+            var もののけ姫 = new Movie("もののけ姫", PriceCodes.Regular);
+            var アンパンマン = new Movie("アンパンマン", PriceCodes.Childrens);
+            var ボヘミアンラプソディ = new Movie("ボヘミアン・ラプソディ", PriceCodes.NewRelease);
 
             var オギー = new Customer("オギー");
 
