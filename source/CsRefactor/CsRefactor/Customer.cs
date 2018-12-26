@@ -27,7 +27,7 @@ namespace CsRefactor
             var result = "Rental Record for " + Name + Environment.NewLine;
             foreach (var rental in rentals)
             {
-                var thisAmount = AmountFor(rental);
+                var thisAmount = rental.GetCharge();
 
                 //レンタルポイントを加算
                 frequentRenterPoints++;
@@ -44,31 +44,6 @@ namespace CsRefactor
             result += "Amount owed is " + totalAmount + Environment.NewLine;
             result += "You earned " + frequentRenterPoints + " frequent renter points";
             return result;
-        }
-
-        private static double AmountFor(Rental rental)
-        {
-            double amount = 0;
-
-            //一行ごとに金額を計算
-            switch (rental.Movie.PriceCode)
-            {
-                case PriceCodes.Regular:
-                    amount += 2;
-                    if (rental.DaysRented > 2)
-                        amount += (rental.DaysRented - 2) * 1.5;
-                    break;
-                case PriceCodes.NewRelease:
-                    amount += rental.DaysRented * 3;
-                    break;
-                case PriceCodes.Childrens:
-                    amount += 1.5;
-                    if (rental.DaysRented > 3)
-                        amount += (rental.DaysRented - 3) * 1.5;
-                    break;
-            }
-
-            return amount;
         }
     }
 }
