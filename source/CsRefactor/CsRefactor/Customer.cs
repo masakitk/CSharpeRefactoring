@@ -48,27 +48,27 @@ namespace CsRefactor
 
         private static double AmountFor(Rental rental)
         {
-            double thisAmount = 0;
+            double amount = 0;
 
             //一行ごとに金額を計算
             switch (rental.Movie.PriceCode)
             {
                 case PriceCodes.Regular:
-                    thisAmount += 2;
+                    amount += 2;
                     if (rental.DaysRented > 2)
-                        thisAmount += (rental.DaysRented - 2) * 1.5;
+                        amount += (rental.DaysRented - 2) * 1.5;
                     break;
                 case PriceCodes.NewRelease:
-                    thisAmount += rental.DaysRented * 3;
+                    amount += rental.DaysRented * 3;
                     break;
                 case PriceCodes.Childrens:
-                    thisAmount += 1.5;
+                    amount += 1.5;
                     if (rental.DaysRented > 3)
-                        thisAmount += (rental.DaysRented - 3) * 1.5;
+                        amount += (rental.DaysRented - 3) * 1.5;
                     break;
             }
 
-            return thisAmount;
+            return amount;
         }
     }
 }
