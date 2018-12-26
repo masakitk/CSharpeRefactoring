@@ -27,35 +27,16 @@ namespace CsRefactor
             var result = "Rental Record for " + Name + Environment.NewLine;
             foreach (var rental in rentals)
             {
-                double thisAmount = 0;
-                var each = rental;
-
-                //一行ごとに金額を計算
-                switch (each.Movie.PriceCode)
-                {
-                    case PriceCodes.Regular:
-                        thisAmount += 2;
-                        if (each.DaysRented> 2)
-                            thisAmount += (each.DaysRented- 2) * 1.5;
-                        break;
-                    case PriceCodes.NewRelease:
-                        thisAmount += each.DaysRented* 3;
-                        break;
-                    case PriceCodes.Childrens:
-                        thisAmount += 1.5;
-                        if (each.DaysRented> 3)
-                            thisAmount += (each.DaysRented- 3) * 1.5;
-                        break;
-                }
+                var thisAmount = AmountFor(rental);
 
                 //レンタルポイントを加算
                 frequentRenterPoints++;
                 //新作を2日以上借りた場合はボーナスポイント
-                if ((each.Movie.PriceCode == PriceCodes.NewRelease) &&
-                    each.DaysRented> 1)
+                if ((rental.Movie.PriceCode == PriceCodes.NewRelease) &&
+                    rental.DaysRented> 1)
                     frequentRenterPoints++;
                 //この貸出に関する数値の表示
-                result += "\t" + each.Movie.Title+ "\t" +
+                result += "\t" + rental.Movie.Title+ "\t" +
                           thisAmount + Environment.NewLine;
                 totalAmount += thisAmount;
             }
@@ -63,6 +44,31 @@ namespace CsRefactor
             result += "Amount owed is " + totalAmount + Environment.NewLine;
             result += "You earned " + frequentRenterPoints + " frequent renter points";
             return result;
+        }
+
+        private static double AmountFor(Rental rental)
+        {
+            double thisAmount = 0;
+
+            //一行ごとに金額を計算
+            switch (rental.Movie.PriceCode)
+            {
+                case PriceCodes.Regular:
+                    thisAmount += 2;
+                    if (rental.DaysRented > 2)
+                        thisAmount += (rental.DaysRented - 2) * 1.5;
+                    break;
+                case PriceCodes.NewRelease:
+                    thisAmount += rental.DaysRented * 3;
+                    break;
+                case PriceCodes.Childrens:
+                    thisAmount += 1.5;
+                    if (rental.DaysRented > 3)
+                        thisAmount += (rental.DaysRented - 3) * 1.5;
+                    break;
+            }
+
+            return thisAmount;
         }
     }
 }
