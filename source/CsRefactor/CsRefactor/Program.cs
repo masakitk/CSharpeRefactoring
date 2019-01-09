@@ -16,7 +16,7 @@ namespace CsRefactor
             オギー.AddRental(new Rental(もののけ姫, 7));
             オギー.AddRental(new Rental(ボヘミアンラプソディ, 1));
 
-            Console.WriteLine(オギー.Statement());
+            Console.WriteLine(オギー.HtmlStatement());
 
             Console.Read();
 

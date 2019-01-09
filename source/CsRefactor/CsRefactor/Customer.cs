@@ -35,6 +35,21 @@ namespace CsRefactor
             return result;
         }
 
+        public string HtmlStatement()
+        {
+            var result = "<H1>Renttals for <EM>" + Name + "</EM></H1><P>\n";
+            foreach (var rental in _rentals)
+            {
+                //貸出に関する数値の表示
+                result += rental.Movie.Title + ": " + rental.GetCharge() + "<BR>\n";
+            }
+            //フッタ
+            result += "<P>You owe <EM>" + GetTotalAmount() + "</EM><P>\n";
+            result += "On this rental you earned <EM>" + GetTotalFrequentRenterPoints() +
+                      "</EM> frequent renter points <P>";
+            return result;
+        }
+
         private int GetTotalFrequentRenterPoints()
         {
             var frequentRenterPoints = 0;
