@@ -27,12 +27,7 @@ namespace CsRefactor
             var result = "Rental Record for " + Name + Environment.NewLine;
             foreach (var rental in rentals)
             {
-                //レンタルポイントを加算
-                frequentRenterPoints++;
-                //新作を2日以上借りた場合はボーナスポイント
-                if ((rental.Movie.PriceCode == PriceCodes.NewRelease) &&
-                    rental.DaysRented> 1)
-                    frequentRenterPoints++;
+                frequentRenterPoints += rental.GetFrequentRenterPoints();
                 //この貸出に関する数値の表示
                 result += "\t" + rental.Movie.Title+ "\t" +
                           rental.GetCharge() + Environment.NewLine;

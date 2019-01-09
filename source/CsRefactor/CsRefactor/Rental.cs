@@ -36,5 +36,17 @@
 
             return amount;
         }
+
+        public int GetFrequentRenterPoints()
+        {
+            var pointToAdd = 0;
+            //レンタルポイントを加算
+            pointToAdd++;
+            //新作を2日以上借りた場合はボーナスポイント
+            if ((Movie.PriceCode == PriceCodes.NewRelease) &&
+                DaysRented > 1)
+                pointToAdd++;
+            return pointToAdd;
+        }
     }
 }
