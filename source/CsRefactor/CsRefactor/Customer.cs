@@ -27,7 +27,7 @@ namespace CsRefactor
             {
                 //この貸出に関する数値の表示
                 result += "\t" + rental.Movie.Title+ "\t" +
-                          rental.Movie.GetCharge(rental) + Environment.NewLine;
+                          rental.Movie.Price.GetCharge(rental.DaysRented) + Environment.NewLine;
             }
 
             result += $"Amount owed is {GetTotalAmount()}{Environment.NewLine}";
@@ -41,7 +41,7 @@ namespace CsRefactor
             foreach (var rental in _rentals)
             {
                 //貸出に関する数値の表示
-                result += rental.Movie.Title + ": " + rental.Movie.GetCharge(rental) + "<BR>\n";
+                result += rental.Movie.Title + ": " + rental.Movie.Price.GetCharge(rental.DaysRented) + "<BR>\n";
             }
             //フッタ
             result += "<P>You owe <EM>" + GetTotalAmount() + "</EM><P>\n";
@@ -55,7 +55,7 @@ namespace CsRefactor
             var frequentRenterPoints = 0;
             foreach (var rental in _rentals)
             {
-                frequentRenterPoints += rental.Movie.GetFrequentRenterPoints(rental);
+                frequentRenterPoints += rental.Movie.Price.GetFrequentRenterPoints(rental.DaysRented);
             }
             return frequentRenterPoints;
         }
@@ -65,7 +65,7 @@ namespace CsRefactor
             double totalAmount = 0;
             foreach (var rental in _rentals)
             {
-                totalAmount += rental.Movie.GetCharge(rental);
+                totalAmount += rental.Movie.Price.GetCharge(rental.DaysRented);
             }
             return totalAmount;
         }
