@@ -1,4 +1,6 @@
-﻿namespace CsRefactor
+﻿using System;
+
+namespace CsRefactor
 {
     public class Movie
     {
@@ -9,11 +11,21 @@
             Price = BuildPrice(priceCode);
         }
 
-        public MoviePrice Price { get; set; }
+        public IMoviePrice Price { get; set; }
 
-        private MoviePrice BuildPrice(PriceCodes priceCode)
+        private IMoviePrice BuildPrice(PriceCodes priceCode)
         {
-            return new MoviePrice(priceCode);
+            switch (priceCode)
+            {
+                case PriceCodes.Childrens:
+                    return new ChildrensPrice();
+                case PriceCodes.NewRelease:
+                    return new NewRelaesePrice();
+                case PriceCodes.Regular:
+                    return new RegularPrice();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(priceCode), priceCode, null);
+            }
         }
 
         public string Title { get; }
@@ -21,7 +33,54 @@
         public PriceCodes PriceCode { get; }
     }
 
-    public class MoviePrice
+    internal class RegularPrice : IMoviePrice
+    {
+        public double GetCharge(int daysRented)
+        {
+            if (daysRented <= 2) return 2.0;
+            return 2.0 + (daysRented - 2) * 1.5;
+        }
+
+        public int GetFrequentRenterPoints(int daysRented)
+        {
+            return 1;
+        }
+    }
+
+    internal class NewRelaesePrice : IMoviePrice
+    {
+        public double GetCharge(int daysRented)
+        {
+            return daysRented * 3;
+        }
+
+        public int GetFrequentRenterPoints(int daysRented)
+        {
+            return (daysRented > 1) ? 2 : 1;
+        }
+    }
+
+    internal class ChildrensPrice : IMoviePrice
+    {
+        public double GetCharge(int daysRented)
+        {
+            if (daysRented <= 3) return 1.5;
+            return 1.5 + (daysRented - 3) * 1.5;
+        }
+
+        public int GetFrequentRenterPoints(int daysRented)
+        {
+            return 1;
+        }
+    }
+
+    public interface IMoviePrice
+    {
+        double GetCharge(int daysRented);
+        int GetFrequentRenterPoints(int daysRented);
+    }
+
+    public class MoviePrice : IMoviePrice
     {
         private readonly PriceCodes _priceCode;
 
